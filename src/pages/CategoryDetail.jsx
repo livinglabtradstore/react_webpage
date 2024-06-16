@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TitleHeader from '../components/TitleHeader';
 
-const API_BASE_URL = 'http://localhost:8008';
+const API_BASE_URL = 'https://livinglabkdt5.duckdns.org/fastapi';
 
 const CategoryDetail = () => {
   const [stores, setStores] = useState([]);
