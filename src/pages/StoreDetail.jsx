@@ -2,7 +2,8 @@ import { useEffect, useState, startTransition } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import TitleHeader from '../components/TitleHeader';
-import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
+import StoreMap from '../components/NaverMap';
+
 
 const API_BASE_URL = 'https://livinglabkdt5.duckdns.org';
 
@@ -10,6 +11,7 @@ const StoreDetail = () => {
   const [store, setStore] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const storeId = searchParams.get('storeId');
@@ -25,7 +27,6 @@ const StoreDetail = () => {
     });
   };
 
-  const navermaps = useNavermaps();
   useEffect(() => {
     const fetchStoreDetail = async () => {
       try {
@@ -50,14 +51,18 @@ const StoreDetail = () => {
     };
 
     if (storeId) {
-      fetchStoreDetail();
-      fetchImageList();
+        Promise.all([fetchStoreDetail(), fetchImageList()]).finally(() => {
+            setLoading(false);
+        });
+        }
+    }, [storeId]);
+    if (loading) {
+        return <p>Loading store detail...</p>;
     }
-  }, [storeId]);
 
-  if (!store) {
-    return <p>Loading store detail...</p>;
-  }
+      if (!store) {
+        return <p>Store not found.</p>;
+    }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -106,18 +111,7 @@ const StoreDetail = () => {
       )}
            <div className='mb-8'>
       <h2 className="text-2xl font-bold mb-4">가게 위치</h2>
-      <MapDiv
-  style={{
-    height: 400,
-  }}
->
-  <NaverMap
-  defaultCenter={new navermaps.LatLng(store.latitude, store.longitude)}
-  defaultZoom={20}
-  >
-    <Marker defaultPosition={{ lat: store.latitude, lng: store.longitude }} />
-  </NaverMap>
-</MapDiv>
+      <StoreMap latitude={store.latitude} longitude={store.longitude} />
     </div>
     </div>
   );
