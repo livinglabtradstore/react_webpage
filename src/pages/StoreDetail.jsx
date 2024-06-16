@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, startTransition } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import TitleHeader from '../components/TitleHeader';
-import { Container as MapDiv, NaverMap, Marker, useNavermaps  } from 'react-naver-maps'
+import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 
 const API_BASE_URL = 'https://livinglabkdt5.duckdns.org';
 
@@ -14,19 +14,25 @@ const StoreDetail = () => {
   const searchParams = new URLSearchParams(location.search);
   const storeId = searchParams.get('storeId');
   const handleImageClick = (imagePath) => {
-    setSelectedImage(imagePath);
+    startTransition(() => {
+      setSelectedImage(imagePath);
+    });
   };
 
   const handleCloseImage = () => {
-    setSelectedImage(null);
+    startTransition(() => {
+      setSelectedImage(null);
+    });
   };
-  
+
   const navermaps = useNavermaps();
   useEffect(() => {
     const fetchStoreDetail = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/store/stores/storecode/${storeId}`);
-        setStore(response.data[0]);
+        startTransition(() => {
+          setStore(response.data[0]);
+        });
       } catch (error) {
         console.error('Error fetching store detail:', error);
       }
@@ -35,7 +41,9 @@ const StoreDetail = () => {
     const fetchImageList = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/store/store/images/${storeId}`);
-        setImageList(response.data.file_list);
+        startTransition(() => {
+          setImageList(response.data.file_list);
+        });
       } catch (error) {
         console.error('Error fetching image list:', error);
       }
