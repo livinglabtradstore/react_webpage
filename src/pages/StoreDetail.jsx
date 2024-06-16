@@ -4,7 +4,7 @@ import axios from 'axios';
 import TitleHeader from '../components/TitleHeader';
 import { Container as MapDiv, NaverMap, Marker, useNavermaps  } from 'react-naver-maps'
 
-const API_BASE_URL = 'https://livinglabkdt5.duckdns.org/fastapi';
+const API_BASE_URL = 'https://livinglabkdt5.duckdns.org';
 
 const StoreDetail = () => {
   const [store, setStore] = useState(null);
