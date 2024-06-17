@@ -69,13 +69,33 @@ const StoreDetail = () => {
       <TitleHeader title={store.store_name} />
       <div className="bg-gray-100 rounded-lg p-6 mb-8">
         {/* <p><strong>상점 코드:</strong> {store.store_code}</p> */}
-        <p><strong>상점명:</strong> {store.store_name}</p>
-        <p><strong>도로명 주소:</strong> {store.address_road}</p>
-        <p><strong>지번 주소:</strong> {store.address_land}</p>
-        <p><strong>업종:</strong> {store.store_type}</p>
-        <p><strong>주요 판매 상품:</strong> {store.main_product}</p>
-        <p><strong>위도:</strong> {store.latitude}</p>
-        <p><strong>경도:</strong> {store.longitude}</p>
+        <p>
+  <strong>상점명</strong>
+  <br />
+  {store.store_name}
+</p>
+<p>
+  <strong>도로명 주소</strong>
+  <br />
+  {store.address_road}
+</p>
+<p>
+  <strong>지번 주소</strong>
+  <br />
+  {store.address_land}
+</p>
+<p>
+  <strong>업종</strong>
+  <br />
+  {store.store_type}
+</p>
+<p>
+  <strong>주요 판매 상품</strong>
+  <br />
+  {store.main_product}
+</p>
+        {/* <p><strong>위도:</strong> {store.latitude}</p> */}
+        {/* <p><strong>경도:</strong> {store.longitude}</p> */}
         {/* <p><strong>사진 확인:</strong> {store.photo_check}</p> */}
       </div>
  
